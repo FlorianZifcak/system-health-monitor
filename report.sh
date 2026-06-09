@@ -37,5 +37,8 @@ else
     DISK_LEVEL="INFO"
 fi
 
-WORST=$(printf "%s CPU\n%s RAM\n%s Disk\n" "$CPU_LEVEL" "$RAM_LEVEL" "$DISK_LEVEL" | sort -r | head -1)
+WORST=$(printf "3 CRITICAL\n2 WARNING\n1 INFO\n" | \
+    grep -w "$CPU_LEVEL\|$RAM_LEVEL\|$DISK_LEVEL" | \
+    sort -rn | head -1 | awk '{print $2}')
+
 echo "Najhoršia metrika: $WORST"
